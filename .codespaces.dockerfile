@@ -19,6 +19,6 @@ RUN wget "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -O "awscliv2
     unzip awscliv2.zip && \
     rm -rf awscliv2.zip && \
     sudo ./aws/install --install-dir /opt/aws-cli --bin-dir /usr/local/bin/ && \
-    sudo chmod a+x /opt/
+    sudo chmod 755 /opt/
 
 USER vscode
