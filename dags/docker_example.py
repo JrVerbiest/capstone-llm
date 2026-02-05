@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
 from airflow import DAG
-from airflow.operators.bash import BashOperator
+from airflow.providers.standard.operators.bash import BashOperator
 from airflow.providers.docker.operators.docker import DockerOperator
-from airflow.operators.empty import EmptyOperator
+from airflow.providers.standard.operators.empty import EmptyOperator
 
 default_args = {
     "owner": "airflow",
@@ -29,24 +29,24 @@ with DAG(
 
     t2 = DockerOperator(
         task_id="docker_command_sleep",
-        image="docker_image_task",
-        container_name="task___command_sleep",
+        image="capstone-llm-clean:latest",
         api_version="auto",
-        auto_remove="force",
-        command="/bin/sleep 30",
+        auto_remove="success",
+        command="/bin/bash -c 'echo Starting sleep task && sleep 10 && echo Sleep completed'",
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
+        mount_tmp_dir=False,
     )
 
     t3 = DockerOperator(
         task_id="docker_command_hello",
-        image="docker_image_task",
-        container_name="task___command_hello",
+        image="capstone-llm-clean:latest",
         api_version="auto",
-        auto_remove="force",
-        command="/bin/sleep 40",
+        auto_remove="success",
+        command="/bin/bash -c 'echo Hello from Docker! && date && python --version'",
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
+        mount_tmp_dir=False,
     )
 
     t4 = BashOperator(task_id="print_hello", bash_command='echo "hello world"')
