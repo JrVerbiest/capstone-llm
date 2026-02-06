@@ -8,9 +8,9 @@ from conveyor.operators import (
 
 default_args = {
     "owner": "airflow",
-    "description": "Use of the DockerOperator",
+    "description": "Clean questions and answers",
     "depend_on_past": False,
-    "start_date": datetime(2021, 5, 1),
+    "start_date": datetime(2026, 2, 5),
     "email_on_failure": False,
     "email_on_retry": False,
     "retries": 1,
@@ -18,15 +18,20 @@ default_args = {
 }
 
 with DAG(
-    "docker_operator_dag_<name>",
+    "capstone_llm_clean_conveyor",
     default_args=default_args,
+    description="Clean questions and answers using Conveyor",
+    schedule="5 * * * *",
     catchup=False,
 ) as dag:
-    ConveyorContainerOperatorV2(
+    clean_task = ConveyorContainerOperatorV2(
         dag=dag,
         task_id="clean",
         instance_type="mx.medium",
         aws_role="capstone_conveyor_llm",
-        cmds=["your_container_command"],
-        arguments=["your_container_arguments"],
+        cmds=["python3"],
+        arguments=["-m", "capstonellm.tasks.clean", "-t", "docker", "-e", "prod"],
+        env_vars={
+            "AWS_DEFAULT_REGION": "us-east-1",
+        },
     )

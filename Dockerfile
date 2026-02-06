@@ -4,6 +4,8 @@ USER 0
 ENV PYSPARK_PYTHON python3
 WORKDIR /opt/spark/work-dir
 
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
 COPY src/ ./src/
 COPY pyproject.toml .
 RUN pip3 install .
