@@ -13,13 +13,6 @@ Your task is thus to improve the llm by feeding it the right data.
 You will start by building the code for the ingestion pipeline locally and scheduling it using Airflow.
 If this is going well, we will run it on a cloud platform, called [Conveyor](https://conveyordata.com/).
 
-To get started We've set up a GitHub Codespaces environment containing all the tools required to complete this exercise (awscli, python, vscode, ...).
-You can access this environment by clicking the button below:
-
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/jrverbiest/capstone-llm)
-
-> **_NOTE:_** When you fork the code repo to your own remote make sure to change the GitHub Codespaces URL to reflect your account in this README!
-
 ## GitHub Codespaces environment
 
 This is an ubuntu-based environment pre-installed with:
